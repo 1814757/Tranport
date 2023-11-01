@@ -1,0 +1,35 @@
+{
+  "name": "product_api",
+  "version": "1.0.0",
+  "description": "Api for product",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server --ignore client",
+    "client": "npm run dev --prefix client",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \" npm run client\""
+  },
+  "keywords": [
+    "product",
+    "CRUD"
+  ],
+  "author": "Foram Sojitra",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^8.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "http-status-codes": "^2.3.0",
+    "imdb-api": "^4.4.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
+    "mongoose": "^5.11.7",
+    "multer": "^1.4.2",
+    "validator": "^13.11.0"
+  }
+}
