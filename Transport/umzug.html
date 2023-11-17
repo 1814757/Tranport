@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transport Webseite</title>
+  <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width,
+    initial-scale=1.0 ">
+  
+    <link rel="stylesheet" href="../css/home.css" />
+   
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+
+
+
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.js"
+      integrity="sha512-1aNp9qKP+hKU/VJwCtYqJP9tdZWbMDN5pEEXXoXT0pTAxZq1HHZhNBR/dtTNSrHO4U1FsFGGILbqG1O9nl8Mdg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.css"
+      integrity="sha512-KuSX+43gVS5MEIJD2ewtrFPOHqC1PJnL8o2f5ciggPC0JUZ8XV0QXlfArO1mSzKkVFdRjsBDfrTU96C5SuRfqQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script>
+    <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+
+    <link
+      href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+ 
+    <script>
+     
+      function openGoogleMaps() {
+        window.open("https://www.google.com/maps", "_blank");
+      }
+  
+      function calculateDeliveryCost() {
+        var distance = parseFloat(document.getElementById('distance').value);
+        if (isNaN(distance) || distance <= 0) {
+          alert("Bitte geben Sie eine gültige Entfernung ein.");
+          return;
+        }
+        
+        var deliveryCost = distance * 0.80;
+  
+        var deliveryCostResult = document.getElementById('deliveryCostResult');
+        deliveryCostResult.textContent = "Lieferkosten: " + deliveryCost.toFixed(2) + " €";
+      }
+  
+      function calculateArea() {
+        var area = parseFloat(document.getElementById('area').value);
+        if (isNaN(area) || area <= 0) {
+          alert("Bitte geben Sie eine gültige Fläche ein.");
+          return;
+        }
+        
+        var result = area * 2.3;
+  
+        var areaResult = document.getElementById('areaResult');
+        areaResult.textContent = "Ergebnis: " + result.toFixed(2);
+      }
+  
+      function changeQuantity(item, value) {
+        var quantity = parseInt(document.getElementById(item).textContent);
+        quantity += value;
+        if (quantity < 0) {
+          quantity = 0;
+        }
+        document.getElementById(item).textContent = quantity.toString();
+      }
+  
+      function sofortRechnen() {
+        var inputs = document.querySelectorAll('.kosten input');
+        var total = 1;
+        for (var i = 0; i < inputs.length; i++) {
+          var value = parseFloat(inputs[i].value);
+          if (isNaN(value) || value <= 0) {
+            alert("Bitte geben Sie gültige Werte ein.");
+            return;
+          }
+          total *= value;
+        }
+  
+        var sofortResult = document.getElementById('sofortResult');
+        sofortResult.textContent = "Ergebnis (× 40): " + (total * 40).toFixed(2);
+      }
+  
+      function eiltSich() {
+        var microwaves = parseInt(document.getElementById('microwave').textContent);
+        if (isNaN(microwaves) || microwaves <= 0) {
+          alert("Bitte geben Sie eine gültige Anzahl für Mikrowelle ein.");
+          return;
+        }
+  
+        var eiltResult = document.getElementById('eiltResult');
+        eiltResult.textContent = "Ergebnis (× 60): " + (microwaves * 60).toFixed(2);
+      } function eiltSich() {
+        var micro = parseInt(document.getElementById('dishwasher').textContent);
+        if (isNaN(micro) || micro <= 0) {
+          alert("Bitte geben Sie eine gültige Anzahl für das ein.");
+          return;
+        }
+  
+        var eiltResul = document.getElementById('eiltResul');
+        eiltResul.textContent = "Ergebnis (× 60): " + (micro * 60).toFixed(2);
+      }
+    </script>
+</head>
+<body>
+  <div id="backgroundPage">
+    <nav class="navbar">
+      <div class="navbar__container">
+          <div class="logo" id="logo__container">
+              <a href="index.html">
+                  <img id="navbar__logo" src="assets/logo-1.png" alt="logo" />
+              </a>
+              <a href="index.html" class="text__link">
+                  <p class="img__par">Transport</p>
+                  <p class="img__par" id="par2">Deutschland</p>
+              </a>
+          </div>
+
+          <div class="navbar__toggle" id="mobile-menu">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+          </div>
+          <ul class="navbar__menu">
+              <li class="navbar__item">
+                  <a href="index.html" class="navbar__links" id="home-page">Startseite</a>
+              </li>
+              <li class="navbar__item">
+                  <a href="#about" class="navbar__links" id="about-page"> Über uns</a>
+              </li>
+              <li class="navbar__item">
+                  <a href="#contact" class="navbar__links" id="signup">Kontakt</a>
+              </li>
+          </ul>
+      </div>
+  </nav>
+  <div class="downloadButtonsContainer">
+    <h1>Lieferdetails</h1>
+
+ 
+</div>
+<div class="downloadButtonsContainer">
+ 
+  <h2>Entfernung</h2>
+  <button class="downloadButtons" onclick="openGoogleMaps()">
+    <span>openGoogleMaps</span>
+  </button>
+  
+</div>
+<div class="downloadButtonsContainer">
+<label ><span>Manuelle Entfernung (in Kilometern):</span></label>
+</div>
+  <input type="number" id="distance">
+  <button class="downloadButtons" onclick="calculateDeliveryCost()"><span>Berechnen</span></button>
+  <p id="deliveryCostResult"></p>
+  <div class="kosten">
+    <h2>Wohnung</h2>
+    
+    <div>
+      <label>Quadratmeter:</label>
+      <input type="number" id="area">
+      <button class="downloadButtons" onclick="calculateArea()">Berechnen</button>
+      
+    </div>
+    <p id="areaResult"></p>
+
+    <h2>Stück</h2>
+    <div class="stück">
+      <button class="downloadButtons" onclick="changeQuantity('kitchen', 1)">Küche +</button>
+      <button class="downloadButtons" onclick="changeQuantity('kitchen', -1)">Küche -</button>
+      <p>Küche: <span id="kitchen">0</span></p>
+    </div>
+    <div class="stück">
+      <button class="downloadButtons"onclick="changeQuantity('stove', 1)">Herd +</button>
+      <button class="downloadButtons"onclick="changeQuantity('stove', -1)">Herd -</button>
+      <p>Herd: <span id="stove">0</span></p>
+    </div>
+    <div class="stück">
+      <button class="downloadButtons"onclick="changeQuantity('dishwasher', 1)">Spülmaschine +</button>
+      <button class="downloadButtons" onclick="changeQuantity('dishwasher', -1)">Spülmaschine -</button>
+      <p>Spülmaschine: <span id="dishwasher">0</span></p>
+    </div>
+    <div class="stück">
+      <button class="downloadButtons" onclick="changeQuantity('microwave', 1)">Mikrowelle +</button>
+      <button class="downloadButtons" onclick="changeQuantity('microwave', -1)">Mikrowelle -</button>
+      <p>Mikrowelle: <span id="microwave">0</span></p>
+    </div>
+    <button class="downloadButtons" onclick="sofortRechnen()">Sofort Rechnen</button>
+    <button class="downloadButtons" onclick="eiltSich()">Eilt sich</button>
+    <p id="sofortResult"></p>
+    <p id="eiltResult"></p>
+  </div>
+
+  <h2>Wohnzimmer</h2>
+  <p>Tische: <span id="tables">0</span></p>
+  <button class="downloadButtons" onclick="changeQuantity('tables', 1)">Tische +</button>
+  <button class="downloadButtons" onclick="changeQuantity('tables', -1)">Tische -</button>
+  <p>Stühle: <span id="chairs">0</span></p>
+  <button class="downloadButtons" onclick="changeQuantity('chairs', 1)">Stühle +</button>
+  <button class="downloadButtons" onclick="changeQuantity('chairs', -1)">Stühle -</button></div>
+  <footer>
+    <div class="footer">
+        <div class="textfooter">
+           Wir Transportieren gerne <br />
+        </div>
+
+        <div class="footerList">
+            <ul class="footer__menu1">
+                <li class="footer__item">
+                    <a href="#consectetur" class="footer__links" id="consectetur">consectetur</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#nostrud" class="footer__links" id="nostrud">nostrud</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#tempor" class="footer__links" id="tempor">tempor</a>
+                </li>
+            </ul>
+
+            <ul class="footer__menu2">
+                <li class="footer__item">
+                    <a href="#about" class="footer__links" id="aboutFooter">About us</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#contact" class="footer__links" id="signupFooter">Contact Us</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#Affiliates" class="footer__links" id="Affiliates">Affiliates</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#Resources" class="footer__links" id="Resources">Resources</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
