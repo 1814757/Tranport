@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux'
 import { ActionType } from '../state/action-types'
 import { useState } from 'react'
 import axios from 'axios'
+import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 
 type Props = {}
 
@@ -16,6 +17,7 @@ const Login = () => {
   const dispatch = useDispatch()
 
   const loginUser = async () => {
+    setIsLoading(true)
     dispatch({ type: ActionType.LOGIN_USER_BEGIN })
 
     try {
@@ -47,39 +49,79 @@ const Login = () => {
     } catch (error: any) {
       setIsLoading(false)
       setAlert({ type: 'danger', text: error.response.data.msg })
-      dispatch({
-        type: ActionType.LOGIN_USER_ERROR,
-      })
+
     }
   }
 
   return (
-    <div style={{ marginTop: '200px' }}>
-      <div>
-        <h2>Login</h2>
-        {alert && (
-          <div className={`alert alert-${alert.type}`} role='alert'>
-            {alert.text}
-          </div>
-        )}
-      </div>
+    <>
+    {alert && (
+        <div className={`alert alert-${alert.type}`} role="alert">
+          {alert.text}
+        </div>
+      )}
 
-      <input
-        type='text'
-        placeholder='Benutzername'
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type='password'
-        placeholder='Passwort'
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={loginUser} disabled={isLoading}>
-        {isLoading ? 'login läuft...' : 'login'}
-      </button>
-    </div>
+     <Container>
+       <Row className="mt-5 pt-5  d-flex justify-content-center align-items-center">
+         <Col md={8} lg={6} xs={12}>
+           <div className="border border-3 border-primary"></div>
+           <Card className="shadow">
+             <Card.Body>
+               <div className="mb-3 mt-md-4">
+                 <h2 className="fw-bold mb-2 text-uppercase ">Transport-Deutschland</h2>
+                 <p className=" mb-5">Bitte geben Sie Ihr Login und Passwort ein!
+</p>
+                 <div className="mb-3">
+                   <Form>
+                     <Form.Group className="mb-3" controlId="formBasicEmail">
+                       <Form.Label className="text-center">
+                         Email address
+                       </Form.Label>
+                       <Form.Control type="email" placeholder="E-Mail eingeben"  value={email}
+        onChange={(e) => setEmail(e.target.value)}/>
+                     </Form.Group>
+
+                     <Form.Group
+                       className="mb-3"
+                       controlId="formBasicPassword"
+                     >
+                       <Form.Label>Passwort</Form.Label>
+                       <Form.Control type="password" placeholder="Passwort" value={password}
+        onChange={(e) => setPassword(e.target.value)} />
+                     </Form.Group>
+                     <Form.Group
+                       className="mb-3"
+                       controlId="formBasicCheckbox"
+                     >
+                       <p className="small">
+                         <a className="text-primary" href="#!">
+                         Passwort vergessen?
+                         </a>
+                       </p>
+                     </Form.Group>
+                     <div className="d-grid">
+                       <Button variant="primary" type="submit" onClick={loginUser} disabled={isLoading}>
+                       {isLoading ? 'login läuft...' : 'login'}
+                       </Button>
+                     </div>
+                   </Form>
+                   <div className="mt-3">
+                     <p className="mb-0  text-center">
+                     Sie haben noch kein Konto?
+                       <a href="register" className="text-primary fw-bold">
+                       Registrieren
+                       </a>
+                     </p>
+                   </div>
+                 </div>
+               </div>
+             </Card.Body>
+           </Card>
+         </Col>
+       </Row>
+     </Container>
+  
+   </>
   )
 }
 
