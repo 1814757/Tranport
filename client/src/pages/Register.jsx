@@ -1,80 +1,59 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import axios from "axios";
-import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import axios from 'axios'
+import { Col, Button, Row, Container, Card, Form } from 'react-bootstrap'
 
-const Register: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [alert, setAlert] = useState<{ type: string; text: string } | null>(
-    null
-  );
+const Register = () => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [alert, setAlert] = useState(null)
 
-  interface data {
-    email: string;
-    password: string;
-    firstname: string;
-    lastname: string;
-    type: string;
+  const initialState = {
+    email: '',
+    password: '',
+    firstname: '',
+    lastname: '',
+    type: 'privatkunde',
   }
-  interface ApiResponse {
-    user: {
-      email: string;
-      password: string;
-      firstname: string;
-      lastname: string;
-      type: string;
-    };
-    token: string;
-    // Add more properties as per your API response structure
+  const [values, setValues] = useState(initialState)
+
+  const handleChange = (e) => {
+    console.log(e.target.value)
+    setValues({ ...values, [e.target.name]: e.target.value })
   }
 
-  const initialState: data = {
-    email: "",
-    password: "",
-    firstname: "",
-    lastname: "",
-    type: "privatkunde",
-  };
-  const [values, setValues] = useState(initialState);
-
-  const handleChange = (e: any) => {
-    console.log(e.target.value);
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const handleRegister = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
 
     try {
-      const response = await axios.post<ApiResponse>(
-        "http://127.0.0.1:5000/api/v1/auth/register",
+      const response = await axios.post(
+        'http://127.0.0.1:5000/api/v1/auth/register',
         values
-      );
-      const data: ApiResponse = response.data;
-      console.log(data);
+      )
+      const data = response.data
+      console.log(data)
       if (response.status === 201) {
-        setIsLoading(false);
-        setAlert({ type: "success", text: "Registrierung erfolgreich" });
+        setIsLoading(false)
+        setAlert({ type: 'success', text: 'Registrierung erfolgreich' })
 
-        // Hier kannst du den Erfolg an deinen Redux-Store weitergeben
         dispatch({
-          type: "REGISTER_USER_SUCCESS",
+          type: 'REGISTER_USER_SUCCESS',
           payload: {
             username: data.user.firstname,
             token: data.token,
-            msg: "Registrierung erfolgreich",
+            msg: 'Registrierung erfolgreich',
           },
-        });
+        })
       } else {
-        setIsLoading(false);
-        setAlert({ type: "danger", text: "Registrierung fehlgeschlagen" });
+        setIsLoading(false)
+        setAlert({ type: 'danger', text: 'Registrierung fehlgeschlagen' })
       }
-    } catch (error: any) {
-      setIsLoading(false);
-      setAlert({ type: "danger", text: error.response.data.msg });
+    } catch (error) {
+      setIsLoading(false)
+      setAlert({ type: 'danger', text: error.response.data.msg })
     }
-  };
+  }
 
   return (
     <div>
@@ -83,7 +62,6 @@ const Register: React.FC = () => {
           {alert.text}
         </div>
       )}
-
 
       <Container>
         <Row className=" mt-5 pt-5 d-flex justify-content-center align-items-center">
@@ -167,16 +145,16 @@ const Register: React.FC = () => {
                           disabled={isLoading}
                         >
                           {isLoading
-                            ? "Registrierung läuft..."
-                            : "Registrieren"}
+                            ? 'Registrierung läuft...'
+                            : 'Registrieren'}
                         </Button>
                       </div>
                     </Form>
                     <div className="mt-3">
                       <p className="mb-0  text-center">
-                      Sie haben bereits ein Konto?
+                        Sie haben bereits ein Konto?
                         <a href="login" className="text-primary fw-bold">
-                        Anmelden
+                          Anmelden
                         </a>
                       </p>
                     </div>
@@ -188,7 +166,7 @@ const Register: React.FC = () => {
         </Row>
       </Container>
     </div>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register
