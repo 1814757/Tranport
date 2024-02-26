@@ -53,7 +53,7 @@ const login = async (req, res) => {
     position: user.position,
   }
   const token = user.createJWT(tokenUser)
-  res.status(StatusCodes.OK).json({ user })
+  res.status(StatusCodes.OK).json({ user, token })
 }
 
 export { login, register }

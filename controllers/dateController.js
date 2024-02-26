@@ -48,11 +48,10 @@ const createAppointments = async (req, res) => {
   }
   console.log(movingData)
   await Moving.create(movingData)
-
+  console.log(movingData)
   return res.status(StatusCodes.CREATED).json({ movingData })
 }
 const getAppointments = async (req, res) => {
-  console.log('req.query')
   const appointments = await Moving.find().select('date').sort('-date')
   const totalAppointments = await Moving.countDocuments({})
   return res.status(StatusCodes.OK).json({ appointments, totalAppointments })

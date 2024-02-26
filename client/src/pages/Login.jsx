@@ -1,17 +1,30 @@
 import { useDispatch } from 'react-redux'
 import { ActionType } from '../state/action-types'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Col, Button, Row, Container, Card, Form } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
-const Login = () => {
+const Login = ({ setIsLoggenIn, isLoggedIn }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [alert, setAlert] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/home')
+    }
+    // eslint-disable-next-line
+  }, [isLoggedIn])
+
+  const addUserToLocalStorage = (user, token) => {
+    localStorage.setItem('user', JSON.stringify(user))
+    localStorage.setItem('token', token)
+  }
   const loginUser = async () => {
     setIsLoading(true)
     dispatch({ type: ActionType.LOGIN_USER_BEGIN })
@@ -25,8 +38,8 @@ const Login = () => {
         }
       )
       const { user, token } = response.data
-      console.log(response.data)
-
+      setIsLoggenIn(user)
+      addUserToLocalStorage(user, token)
       if (response.status === 200) {
         setIsLoading(false)
         setAlert({ type: 'success', text: 'Login erfolgreich' })

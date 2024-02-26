@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TimePicker } from './index'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -6,9 +6,28 @@ import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker'
 import dayjs from 'dayjs'
 import 'dayjs/locale/de' // Importiere das deutsche Locale
 import { deDE } from '@mui/x-date-pickers/locales'
+import axios from 'axios'
 
 const Appointment = ({ values, onFormDataChange }) => {
-  const dates = []
+  let dates = []
+
+  useEffect(() => {
+    getAppointment()
+
+    // eslint-disable-next-line
+  }, [])
+  const getAppointment = () => {
+    axios
+      .get('http://127.0.0.1:5000/api/v1/home/create-appointment')
+      .then((res) => {
+        res.data.appointments.map((item) => {
+          dates.push(item.date)
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
   const handleChange = (e) => {
     console.log(e.target)
     onFormDataChange(e, 'terminVereinbaren', e.target.name)
@@ -24,7 +43,7 @@ const Appointment = ({ values, onFormDataChange }) => {
 
   const isDateInArray = (date) =>
     dates.some((d) => dayjs(d).isSame(date, 'day'))
-
+  console.log(dates)
   return (
     <div className="project-form ">
       <h5 className="section-title">Termin Vereinbaren</h5>

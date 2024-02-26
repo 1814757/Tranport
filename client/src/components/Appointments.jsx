@@ -28,14 +28,6 @@ function Appointments() {
   const classes = useStyles()
   const [values, setValues] = useState(initialState)
 
-  //   useEffect(() => {
-  //     getAppointment()
-  //     if (alertText === 'Neuer Termin geschaffen!') {
-  //       clearValues()
-  //     }
-  //     // eslint-disable-next-line
-  //   }, [alertText])
-
   const handleNext = async (e) => {
     e.preventDefault()
     try {

@@ -1,5 +1,18 @@
 import Appointments from './Appointments'
-const Hero = () => {
+import { useNavigate } from 'react-router-dom'
+
+const Hero = ({ setShowDate, showDate, isLoggedIn }) => {
+  const navigate = useNavigate()
+
+  const makeAppointment = () => {
+    console.log(isLoggedIn)
+    if (isLoggedIn) {
+      setShowDate(true)
+    } else {
+      navigate('/login')
+    }
+  }
+
   return (
     <div className="hero">
       <div className="textHeroDiv">
@@ -19,10 +32,11 @@ const Hero = () => {
             <br />
           </h2>
         </p>
+        <button onClick={() => makeAppointment()}>Termin Vereinbaren </button>
       </div>
 
       <div className="imgHeroDiv"></div>
-      <Appointments />
+      {showDate && <Appointments />}
     </div>
   )
 }
