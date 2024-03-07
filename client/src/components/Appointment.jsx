@@ -18,7 +18,7 @@ const Appointment = ({ values, onFormDataChange }) => {
   }, [])
   const getAppointment = () => {
     axios
-      .get('http://127.0.0.1:5000/api/v1/home/create-appointment')
+      .get('http://127.0.0.1:5000/api/v1/home/appointments')
       .then((res) => {
         res.data.appointments.map((item) => {
           dates.push(item.date)

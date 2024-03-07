@@ -3,54 +3,21 @@ import Moving from '../model/Date.js'
 import { BadRequestError } from '../errors/index.js'
 
 const createAppointments = async (req, res) => {
-  const movingData = {}
+  const receivedTimeAsString = req.body.date;
 
-  const propertyMapping = {
-    umzugVon: 'from',
-    umzugNach: 'to',
-    persoenlicheDaten: 'persoenliche',
-    terminVereinbaren: 'termin',
-  }
-
-  const flattenObject = (obj, sectionKey = '') => {
-    for (const key in obj) {
-      var newKey = ''
-
-      newKey =
-        sectionKey === 'from' || sectionKey === 'to'
-          ? `${sectionKey}_${key}`
-          : key
-
-      if (typeof obj[key] === 'object' && obj[key] !== null) {
-        flattenObject(obj[key], propertyMapping[key] || sectionKey)
-      } else {
-        movingData[newKey] = obj[key]
-      }
-    }
-  }
-
-  flattenObject(req.body)
-  const receivedTimeAsString = movingData.date
-
-  const currentTime = new Date(receivedTimeAsString)
-  console.log(new Date(currentTime.getTime() + 24 * 60 * 60 * 1000))
+  const currentTime = new Date(receivedTimeAsString);
   const existingMovingAppointment = await Moving.findOne({
-    date: {
-      $gte: currentTime,
-      $lt: new Date(currentTime.getTime() + 24 * 60 * 60 * 1000),
-    },
-  })
+    date: currentTime, // Verwenden Sie das genaue Datum und die genaue Uhrzeit für die Überprüfung
+  });
 
   if (existingMovingAppointment) {
-    throw new BadRequestError(
-      'es wurde bereits ein Termin für das Datum existiert'
-    )
+    throw new BadRequestError('Es wurde bereits ein Termin für das Datum existiert');
   }
-  console.log(movingData)
-  await Moving.create(movingData)
-  console.log(movingData)
-  return res.status(StatusCodes.CREATED).json({ movingData })
+  
+  const movingData = await Moving.create({ date: currentTime });
+  return res.status(StatusCodes.CREATED).json({ movingData });
 }
+
 const getAppointments = async (req, res) => {
   const appointments = await Moving.find().select('date').sort('-date')
   const totalAppointments = await Moving.countDocuments({})

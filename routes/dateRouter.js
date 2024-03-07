@@ -1,14 +1,15 @@
-import express from 'express'
-import {
-  createAppointments,
-  getAppointments,
-} from '../controllers/dateController.js'
+import express from 'express';
+import { createAppointments, getAppointments } from '../controllers/dateController.js';
 
-const router = express.Router()
+const router = express.Router();
 
-router
-  .route('/create-appointment')
-  .post(createAppointments)
-  .get(getAppointments)
+// POST Request zum Erstellen eines Termins
+router.route('/create-appointment')
+    .post(createAppointments);
 
-export default router
+// GET Request zum Abrufen aller Termine
+router.route('/appointments')
+    .get(getAppointments);
+
+// Exportiere den Router
+export default router;

@@ -17,7 +17,7 @@ export default function DatePicker(props) {
     className,
   } = props
   const handleDateTimeRangePickerChange = (_value) => {
-    console.log('handle change')
+    console.log('handle change',value)
     handleChange({ target: { name, value: _value, maxTime, minTime } })
   }
   function disableWeekends(date) {
@@ -48,7 +48,7 @@ export default function DatePicker(props) {
           autoOk={true}
           timeFormat="HH:MM"
           ampm={false}
-          minutesStep={5}
+          minutesStep={30}
           maxTime={new Date(0, 0, 0, 21, 0)}
           shouldDisableDate={disableWeekends}
           shouldDisableTime={(timeValue, clockType) => {
